@@ -23,3 +23,4 @@ COPY include_resources /downloads
 RUN mv /downloads/supervisord.conf /etc/.
 
 #CMD ["/bin/sh", "-c", "while true; do echo $(date); sleep 5; done;"]
+CMD ["supervisord", "-c", "/etc/supervisord.conf"]
