@@ -1,0 +1,25 @@
+FROM centos:latest
+MAINTAINER damian knopp
+LABEL version="1.0"
+LABEL description="build docker image for Tomcat"
+
+EXPOSE 8080
+
+WORKDIR /downloads
+
+RUN yum install -y java-1.8.0-openjdk wget gzip python python-setuptools \
+&& easy_install pip \
+&& pip install supervisor \
+&& mkdir -p /downloads \
+&& wget http://apache.mesi.com.ar/tomcat/tomcat-9/v9.0.0.M1/bin/apache-tomcat-9.0.0.M1.tar.gz \
+&& mv apache-tomcat-9.0.0.M1.tar.gz /downloads/tomcat.tar.gz \
+&& yum clean all
+
+RUN gzip -dc tomcat.tar.gz | tar -xvf - \
+&& ln -s apache-tomcat-9.0.0.M1 tomcat \
+&& rm -rf tomcat.tar.gz
+
+COPY include_resources /downloads
+RUN mv /downloads/supervisord.conf /etc/.
+
+#CMD ["/bin/sh", "-c", "while true; do echo $(date); sleep 5; done;"]
