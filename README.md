@@ -22,10 +22,11 @@ Run Dockers
 
 Verify Tomcat
 ---
-	curl localhost:8080 # see tomcat data
-
 If MACOS, curl against your docker-machine
 
 	curl $(docker-machine ip default-small):8080
 
+Otherwise, curl directly against docker
+
+	curl localhost:8080
 
